@@ -1,0 +1,8 @@
+package: github.com/johanneswuerbach/s3sync
+import:
+- package: github.com/aws/aws-sdk-go
+  subpackages:
+  - /aws
+  - aws/session
+  - service/s3
+  - service/s3/s3manager
