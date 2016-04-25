@@ -23,6 +23,7 @@ var objectsCount = 0
 
 func worker(id int, jobs <-chan *s3.Object, downloader *s3manager.Downloader, awsBucket string, destDir string) {
 	for object := range jobs {
+		os.MkdirAll(path.Dir(path.Join(destDir, *object.Key)), 0777)
 		file, err := os.Create(path.Join(destDir, *object.Key))
 		if err != nil {
 			log.Fatal("Failed to create file", err)
