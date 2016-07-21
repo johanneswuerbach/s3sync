@@ -1,42 +1,35 @@
-hash: 4f013558b2858ce6ab7a97494c945d7138f84f38d14a78b237ec9270a7218c9b
-updated: 2016-02-09T11:18:15.222156668+01:00
+hash: 45189a1035a7d9cd9172aba08b41ce1af9dc6226837f8bb1afcf259924b99fae
+updated: 2016-07-21T20:33:21.537061838+02:00
 imports:
 - name: github.com/aws/aws-sdk-go
   version: 38ff93f5aca911b494061bc6a8a69dae652057e8
   subpackages:
-  - /aws
+  - aws
   - aws/session
   - service/s3
   - service/s3/s3manager
-- name: github.com/davecgh/go-spew
-  version: 2df174808ee097f90d259e432cc04442cf60be21
-  subpackages:
-  - spew
+  - aws/awserr
+  - aws/credentials
+  - aws/client
+  - aws/corehandlers
+  - aws/defaults
+  - aws/request
+  - private/endpoints
+  - aws/awsutil
+  - aws/client/metadata
+  - private/protocol
+  - private/protocol/restxml
+  - private/signer/v4
+  - private/waiter
+  - service/s3/s3iface
+  - aws/credentials/ec2rolecreds
+  - aws/ec2metadata
+  - private/protocol/query
+  - private/protocol/rest
+  - private/protocol/xml/xmlutil
+  - private/protocol/query/queryutil
 - name: github.com/go-ini/ini
   version: 193d1ecb466bf97aae8b454a5cfc192941c64809
 - name: github.com/jmespath/go-jmespath
   version: 0b12d6b521d83fc7f755e7cfc1b1fbdd35a01a74
-- name: github.com/lsegal/gucumber
-  version: 44a4d7eb3b14a88cf82b073dfb7e06277afdc549
-  repo: https://github.com/lsegal/gucumber
-- name: github.com/pmezard/go-difflib
-  version: d8ed2627bdf02c080bf22230dbb337003b7aba2d
-  subpackages:
-  - difflib
-- name: github.com/shiena/ansicolor
-  version: a422bbe96644373c5753384a59d678f7d261ff10
-  repo: https://github.com/shiena/ansicolor
-- name: github.com/stretchr/objx
-  version: cbeaeb16a013161a98496fad62933b1d21786672
-- name: github.com/stretchr/testify
-  version: 9f9027faeb0dad515336ed2f28317f9f8f527ab4
-- name: golang.org/x/crypto
-  version: 1f22c0103821b9390939b6776727195525381532
-- name: golang.org/x/net
-  version: 7f88271ea9913b72aca44fa7fc8af919eacc17ce
-- name: golang.org/x/text
-  version: 2ea5e055772cf5daa0b1478d6e88c8d0c3d4cb79
-  repo: https://golang.org/x/text
-- name: golang.org/x/tools
-  version: fe74a4186116b8d7dd38a723993e0d84f8834b34
-devImports: []
+testImports: []
