@@ -1,2 +1,5 @@
 build:
-	GO15VENDOREXPERIMENT=1 go build s3sync.go
+	go build s3sync.go
+
+dependencies:
+	glide install
