@@ -6,6 +6,7 @@ import (
 	"net/url"
 	"os"
 	"path"
+	"strings"
 	"sync"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -47,11 +48,29 @@ func worker(id int, jobs <-chan *s3.Object, downloader *s3manager.Downloader, aw
 	}
 }
 
+func workerBucket(id int, jobs <-chan *s3.Object, svc *s3.S3, awsBucket, destBucket, destPrefix string) {
+	for object := range jobs {
+		fmt.Println("Copy", path.Join(awsBucket, *object.Key), destBucket, path.Join(destPrefix, *object.Key))
+
+		_, err := svc.CopyObject(&s3.CopyObjectInput{
+			Bucket:     aws.String(destBucket),
+			CopySource: aws.String(path.Join(awsBucket, *object.Key)),
+			Key:        aws.String(path.Join(destPrefix, *object.Key)),
+		})
+
+		if err != nil {
+			fmt.Println("Failed to copy file", err)
+			return
+		}
+
+	}
+}
+
 func main() {
 	jobs := make(chan *s3.Object)
 
 	s3Url := os.Args[1]
-	destDir := os.Args[2]
+	dest := os.Args[2]
 
 	u, err := url.Parse(s3Url)
 	if err != nil {
@@ -61,14 +80,8 @@ func main() {
 	s3Bucket := u.Host
 	s3Prefix := u.Path[1:]
 
-	err = os.MkdirAll(destDir, 0700)
-	if err != nil {
-		log.Fatal(err)
-	}
-
 	session := session.New(&aws.Config{Region: aws.String(awsRegion)})
 	svc := s3.New(session)
-	downloader := s3manager.NewDownloader(session)
 
 	params := &s3.ListObjectsInput{
 		Bucket: aws.String(s3Bucket),
@@ -76,12 +89,38 @@ func main() {
 	}
 
 	var wg sync.WaitGroup
-	for w := 1; w <= concurrency; w++ {
-		wg.Add(1)
-		go func(w int) {
-			worker(w, jobs, downloader, s3Bucket, destDir)
-			defer wg.Done()
-		}(w)
+	if strings.HasPrefix(dest, "s3://") {
+		fmt.Println(dest)
+		u, err = url.Parse(dest)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		destBucket := u.Host
+		destPrefix := u.Path[1:]
+
+		for w := 1; w <= concurrency; w++ {
+			wg.Add(1)
+			go func(w int) {
+				workerBucket(w, jobs, svc, s3Bucket, destBucket, destPrefix)
+				defer wg.Done()
+			}(w)
+		}
+	} else {
+		err = os.MkdirAll(dest, 0700)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		downloader := s3manager.NewDownloader(session)
+
+		for w := 1; w <= concurrency; w++ {
+			wg.Add(1)
+			go func(w int) {
+				worker(w, jobs, downloader, s3Bucket, dest)
+				defer wg.Done()
+			}(w)
+		}
 	}
 
 	log.Printf("Looking for objects in bucket: %s, prefix: %s", s3Bucket, s3Prefix)

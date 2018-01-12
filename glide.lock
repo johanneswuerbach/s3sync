@@ -1,35 +1,38 @@
 hash: 45189a1035a7d9cd9172aba08b41ce1af9dc6226837f8bb1afcf259924b99fae
-updated: 2016-07-21T20:33:21.537061838+02:00
+updated: 2018-01-11T10:58:38.077213+01:00
 imports:
 - name: github.com/aws/aws-sdk-go
-  version: 38ff93f5aca911b494061bc6a8a69dae652057e8
+  version: ee1f179877b2daf2aaabf71fa900773bf8842253
   subpackages:
   - aws
-  - aws/session
-  - service/s3
-  - service/s3/s3manager
   - aws/awserr
-  - aws/credentials
-  - aws/client
-  - aws/corehandlers
-  - aws/defaults
-  - aws/request
-  - private/endpoints
   - aws/awsutil
+  - aws/client
   - aws/client/metadata
-  - private/protocol
-  - private/protocol/restxml
-  - private/signer/v4
-  - private/waiter
-  - service/s3/s3iface
+  - aws/corehandlers
+  - aws/credentials
   - aws/credentials/ec2rolecreds
+  - aws/credentials/endpointcreds
+  - aws/credentials/stscreds
+  - aws/defaults
   - aws/ec2metadata
+  - aws/endpoints
+  - aws/request
+  - aws/session
+  - aws/signer/v4
+  - internal/shareddefaults
+  - private/protocol
   - private/protocol/query
-  - private/protocol/rest
-  - private/protocol/xml/xmlutil
   - private/protocol/query/queryutil
+  - private/protocol/rest
+  - private/protocol/restxml
+  - private/protocol/xml/xmlutil
+  - service/s3
+  - service/s3/s3iface
+  - service/s3/s3manager
+  - service/sts
 - name: github.com/go-ini/ini
-  version: 193d1ecb466bf97aae8b454a5cfc192941c64809
+  version: a2610b3a793cfa7fdf0b07038068af5ddc12aba1
 - name: github.com/jmespath/go-jmespath
-  version: 0b12d6b521d83fc7f755e7cfc1b1fbdd35a01a74
+  version: bd40a432e4c76585ef6b72d3fd96fb9b6dc7b68d
 testImports: []
